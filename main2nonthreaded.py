@@ -1,0 +1,99 @@
+#!/usr/bin/python
+import socket, thread, os, sys, signal, time
+Host = '0.0.0.0'
+Port = 4242
+BUFF = 16384
+from __main__ import *
+def response(key):
+    return 'OK!' + key
+class Gest():
+	#def kbdinput(self,):
+		#print 'all your base belong to tab'
+		# while 1:
+			# try:
+				# print gotmail
+				# kbdata = raw_input()
+				# print type(kbdata)
+				# print 'Enter the destination (IPv4)'
+				# dst = raw_input()
+				# string = 
+				# kbdata
+				# myhand.sendmessage(kbdata, dst)
+				# print data
+				# myhand.getmessage(data)
+				# myhand.getmessage()
+				# print data
+					# print myhand.getmessage()
+				# break
+			# except:
+				# print 'Error', sys.exc_info()#[0]
+				# break
+			#print 'test'
+    # def __init__(self):
+        # pass #why does that init forbid the method handler to be registered?
+	def handler(self, clientsock, addr):
+		receivedlendata = 0
+		fromclientlendata = 0
+		lenreceived = False
+		clientsock.settimeout(140)
+		data = ''
+		packet = ''
+		lendata = ''
+		print 'Je reviens avant le while'
+		amount_received = 0
+		amount_expected = 99999999999999999999999999999999999
+		while amount_received < amount_expected:
+			packet = clientsock.recv(BUFF)
+			data += packet
+			#print data
+			amount_received = data.split(',', 1)
+			amount_received = len(amount_received[1])
+			amount_expected = data.split(',', 1)
+			#print amount_expected
+			amount_expected = int(amount_expected[0])
+			#print 'amount expected is :' + str(amount_expected)
+		print 'while ended'
+		final = data.split(',', 1)
+		final = final[1]
+		#print len(data)
+		if len(final) == amount_expected:
+			final2 = 'Ok!'
+			#clientsock.send(final2)
+			gotmail = 'Message recu de ' + str(addr) + 'contenant :' + final
+			print gotmail
+			clientsock.send(gotmail)
+			#clientsock.send(data)
+			print 'Ok'
+			# data = ''
+			# packet = ''s
+			# amount_received = 0
+			# amount_expected = 99999999999999999999999999999999999
+mygest = Gest()		
+print dir(mygest)
+#if __name__ == '__main__':
+ADDR = (Host, Port)
+serversock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+serversock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+serversock.setblocking(0)
+serversock.bind(ADDR)
+serversock.listen(5)
+#mychecklogin = Checklogin()
+print 'Main socket listener started'
+while 1:
+	try:
+		#print 'waiting for connection... listening on port', Port
+		clientsock, addr = serversock.accept()
+		print '...connected from:', addr
+		print 'pouet'
+	#thread.start_new_thread(mygest.kbdinput)
+		thread.start_new_thread(mygest.handler, (clientsock, addr))
+	except KeyboardInterrupt:
+		print "\nCraaac"
+		os.remove('server.pid')
+		serversock.shutdown
+		serversock.close
+		os._exit(0)
+	except:
+		pass
+
+#while 1:
