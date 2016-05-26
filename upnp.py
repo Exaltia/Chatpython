@@ -93,6 +93,23 @@ if resp:
 		doc.appendChild(envelope)
 		# our tree is ready, conver it to a string
 		pure_xml = doc.toxml()
+		# use the object returned by urlparse.urlparse to get the hostname and port
+		conn = httplib.HTTPConnection(router_path.hostname, router_path.port)
+		# use the path of WANIPConnection (or WANPPPConnection) to target that service,
+		# insert the xml payload,
+		# add two headers to make tell the server what we're sending exactly.
+		conn.request('POST',
+			path,
+			pure_xml,
+			{'SOAPAction': '"urn:schemas-upnp-org:service:WANIPConnection:1#AddPortMapping"',
+			 'Content-Type': 'text/xml'}
+		)
+		# wait for a response
+		resp = conn.getresponse()
+		# print the response status
+		print resp.status
+		# print the response body
+		print resp.read()
 	except:
 		print 'WTF Happened?'
 else:
