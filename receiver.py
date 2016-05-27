@@ -27,20 +27,30 @@ class Gest():
 			#Todo : Use github tools to stop adding todo in code
 			while amount_received < amount_expected:
 				packet = clientsock.recv(BUFF)
-				data += packet
-				amount_received = data.split(',', 1)
-				amount_received = len(amount_received[1])
-				amount_expected = data.split(',', 1)
-				amount_expected = int(amount_expected[0])
+				try:
+					data += packet
+					amount_received = data.split(',', 1)
+					amount_received = len(amount_received[1])
+					amount_expected = data.split(',', 1)
+					amount_expected = int(amount_expected[0])
+				except:
+					if packet == '0474719200': #Draft for scanner script
+						clientsock.send('Glay')
+					else:
+						print 'Protocole sur chaise roulante!'
 			print 'while ended'
-			final = data.split(',', 1)
-			final = final[1]
-			if len(final) == amount_expected:
-				final2 = 'Ok!'
-				gotmail = 'Message recu de ' + str(addr) + 'contenant :' + final
-				print gotmail
-				clientsock.send(gotmail)
-				print 'Ok'
+			try:
+				final = data.split(',', 1)
+				final = final[1]
+				if len(final) == amount_expected:
+					final2 = 'Ok!'
+					gotmail = 'Message recu de ' + str(addr) + 'contenant :' + final
+					print gotmail
+					clientsock.send(gotmail)
+					print 'Ok'
+			except:
+				print 'Protocole fracture!'
+				pass
 			print 'waiting for connection... listening on port', Port
 mygest = Gest() # Hum... errr... is this line still usefull? must test		
 ADDR = (Host, Port) #Server socket creation

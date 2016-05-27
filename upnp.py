@@ -105,6 +105,7 @@ if resp:
 			 'Content-Type': 'text/xml'}
 		)
 		# wait for a response
+		print pure_xml
 		resp = conn.getresponse()
 		# print the response status
 		print resp.status
