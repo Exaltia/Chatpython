@@ -18,7 +18,7 @@ class Messagehandling():
 		s.connect((TCP_IP, Port))
 		lenmsg = len(MESSAGE)
 		lenmsg = str(lenmsg)
-		protomsg = lenmsg + ',' + MESSAGE #client Wait for the following message : "messagelenght,message"
+		protomsg = lenmsg + ',' + USERID + ',' + MESSAGE #client Wait for the following message : "messagelenght,message"
 		print len(protomsg) #Debug line, could be removed Soon(tm)
 		s.send(protomsg) # send message to the specified client
 		print 'sent'

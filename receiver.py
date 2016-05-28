@@ -3,14 +3,18 @@
 #I'm the server who is launched by displayer and return received data to this script
 import socket, threading, os, sys, signal, time #,client2
 Host = '0.0.0.0'
+
 Port = 4242 # Maybe : Move this hardcoded values to a setting file
 BUFF = 16384 # Do NOT move that to a setting file, or be sure that pebcak while occur
 from __main__ import *
 def response(key):
     return 'OK!' + key
 class Gest():
-	def handler(self,):
+	def handler(self, in_q):
+		emailhash = in_q.get()
+		#emailhash = emailhash
 		while True: # Message reception infinite loop
+			print 'emailhash: ' + str(emailhash)
 			receivedlendata = 0
 			fromclientlendata = 0
 			lenreceived = False
@@ -34,24 +38,26 @@ class Gest():
 					amount_expected = data.split(',', 1)
 					amount_expected = int(amount_expected[0])
 				except:
-					if packet == '0474719200': #Draft for scanner script
-						clientsock.send('Glay')
-					else:
-						print 'Protocole sur chaise roulante!'
+					print 'Protocole sur chaise roulante!'
 			print 'while ended'
 			try:
-				final = data.split(',', 1)
-				final = final[1]
-				if len(final) == amount_expected:
-					final2 = 'Ok!'
-					gotmail = 'Message recu de ' + str(addr) + 'contenant :' + final
-					print gotmail
-					clientsock.send(gotmail)
-					print 'Ok'
+				final = data.split(',', 2)
+				msg = final[2]
+				userid = final[1]
+				if len(msg) == amount_expected:
+					if msg != 'WHOAREU':
+						print msg
+						gotmail = 'Message recu de ' + userid + 'contenant :' + msg
+						print gotmail
+						clientsock.send(gotmail)
+						final2 = 'Ok!'
+						msg = ''
+					elif msg == 'WHOAREU':
+						clientsock.send(emailhash)
+						msg = ''
+						#clientsock.close()
 			except:
-				print 'Protocole fracture!'
-				pass
-			print 'waiting for connection... listening on port', Port
+				print 'Protocole fracture!', sys.exc_info()
 mygest = Gest() # Hum... errr... is this line still usefull? must test		
 ADDR = (Host, Port) #Server socket creation
 serversock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
