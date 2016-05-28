@@ -8,9 +8,9 @@ from urlparse import urlparse
 from xml.dom.minidom import parseString, Document
 SSDP_ADDR = "239.255.255.250"
 SSDP_PORT = 1900
-SSDP_MX = 2
-SSDP_ST = "urn:schemas-upnp-org:device:InternetGatewayDevice:1"
-
+SSDP_MX = 3
+#SSDP_ST = "urn:schemas-upnp-org:device:InternetGatewayDevice:1"
+SSDP_ST = "urn:schemas-upnp-org:device:WANConnectionDevice:1"
 ssdpRequest = "M-SEARCH * HTTP/1.1\r\n" + \
                 "HOST: %s:%d\r\n" % (SSDP_ADDR, SSDP_PORT) + \
                 "MAN: \"ssdp:discover\"\r\n" + \
@@ -25,9 +25,6 @@ except:
 	print 'No answer from any upnp device, quitting.'
 if resp:
 	try:
-		print '-----------------------------------------\n' + 'Copy past following debug info and flood exaltia with, please!, she loves it tick and messy!\n'
-		print resp
-		print '\n-----------------------------------------'
 		parsed = re.findall(r'(?P<name>.*?): (?P<value>.*?)\r\n', resp)
 		# get the location header
 		location = filter(lambda x: x[0].lower() == "location", parsed)
@@ -61,13 +58,14 @@ if resp:
 		# setup the argument element names and values
 		# using a list of tuples to preserve order
 		arguments = [
-			('NewExternalPort', '35000'),           # specify port on router
+			('NewRemoteHost', ''),
+			('NewExternalPort', '4242'),           # specify port on router
 			('NewProtocol', 'TCP'),                 # specify protocol
-			('NewInternalPort', '35000'),           # specify port on internal host
-			('NewInternalClient', '192.168.1.90'), # specify IP of internal host
+			('NewInternalPort', '4242'),           # specify port on internal host
+			('NewInternalClient', '192.168.0.32'), # specify IP of internal host
 			('NewEnabled', '1'),                    # turn mapping ON
-			('NewPortMappingDescription', 'Test desc'), # add a description
-			('NewLeaseDuration', '0')]              # how long should it be opened?
+			('NewPortMappingDescription', '4242'), # add a description
+			('NewLeaseDuration', '1800')]              # how long should it be opened?
 		# NewEnabled should be 1 by default, but better supply it.
 		# NewPortMappingDescription Can be anything you want, even an empty string.
 		# NewLeaseDuration can be any integer BUT some UPnP devices don't support it,
@@ -105,12 +103,11 @@ if resp:
 			 'Content-Type': 'text/xml'}
 		)
 		# wait for a response
-		print pure_xml
 		resp = conn.getresponse()
 		# print the response status
-		print resp.status
+		print 'Reponse status is: ' + str(resp.status)
 		# print the response body
-		print resp.read()
+		print 'Answer is: ' + str(resp.read())
 	except:
 		print 'WTF Happened?'
 else:
