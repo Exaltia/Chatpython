@@ -12,7 +12,7 @@ def response(key):
 class Gest():
 	def handler(self, in_q):
 		emailhash = in_q.get()
-		#emailhash = emailhash
+		miaouemailhash = 'MIAOU,' + emailhash
 		while True: # Message reception infinite loop
 			print 'emailhash: ' + str(emailhash)
 			receivedlendata = 0
@@ -53,7 +53,7 @@ class Gest():
 						final2 = 'Ok!'
 						msg = ''
 					elif msg == 'WHOAREU':
-						clientsock.send(emailhash)
+						clientsock.send(miaouemailhash)
 						msg = ''
 						#clientsock.close()
 			except:
