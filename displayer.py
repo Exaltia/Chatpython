@@ -2,7 +2,7 @@
 # coding=UTF-8
 #What i do?:
 #I'm a big lazy script who only launch trhead, collect user input and send it to my thread, then get it back
-import socket, threading, os, sys, signal, sender, receiver, hashlib
+import socket, threading, os, sys, signal, sender, receiver, hashlib, threadedscan
 from Queue import Queue
 print dir(receiver)
 mygest = receiver.Gest()
@@ -38,6 +38,7 @@ class kbdinput():
 				break
 			print 'test'
 q = Queue()
+myscanner = Ipscanner()
 mykbdinput = kbdinput() #Threading section, do NOT make infinite loop of this, as thread already loop themselves.
 conhandler = threading.Thread(target=mygest.handler, args=(q,))
 kbdhandler = threading.Thread(target=mykbdinput.keyboard_input, args=(q,))
