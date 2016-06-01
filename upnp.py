@@ -25,6 +25,9 @@ except:
 	print 'No answer from any upnp device, quitting.'
 if resp:
 	try:
+		print '-----------------------------------------\n' + 'Copy past following debug info and flood exaltia with, please!, she loves it tick and messy!\n'
+		print resp
+		print '\n-----------------------------------------'
 		parsed = re.findall(r'(?P<name>.*?): (?P<value>.*?)\r\n', resp)
 		# get the location header
 		location = filter(lambda x: x[0].lower() == "location", parsed)
@@ -32,6 +35,7 @@ if resp:
 		router_path = urlparse(location[0][1])
 		# get the profile xml file and read it into a variable
 		directory = urllib2.urlopen(location[0][1]).read()
+		print 'Directory is :' + directory
 		# create a DOM object that represents the `directory` document
 		dom = parseString(directory)
 		# find all 'serviceType' elements
@@ -103,6 +107,9 @@ if resp:
 			 'Content-Type': 'text/xml'}
 		)
 		# wait for a response
+		print '---'
+		print str(pure_xml)
+		print '---'
 		resp = conn.getresponse()
 		# print the response status
 		print 'Reponse status is: ' + str(resp.status)
