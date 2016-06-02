@@ -2,8 +2,8 @@
 #Scan, scan, scan, and more scan, I WANT FRIENDS!
 from Queue import Queue
 import time, socket, sys, time, random, os, datetime #Datetime is for debug purpose only on the already in progress error diag
-class Testeur():
-	def testtest(self, myip, range1, range2, out_q, firsttime,):
+class Scanner():
+	def threadedscan(self, myip, range1, range2, out_q, firsttime,):
 		PORT = 4242
 		BUFF = 1000
 		MESSAGE = 'WHOAREU'
@@ -56,7 +56,7 @@ class Testeur():
 					#time.sleep(0.1)
 					#print bb
 				#print 'Pouet'
-			print 'Going to out_q'
+			#print 'Going to out_q'
 			out_q.put(nodetable)
 			#print host
 			# print 'i close' + host + str(datetime.datetime.now())
