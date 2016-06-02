@@ -55,7 +55,7 @@ while len(a) < 21:
 	#sleeptime = sleeptime + 0.1 * 2
 	#print myip
 		#print i
-	all_objects = muppy.get_objects()
+	#all_objects = muppy.get_objects()
 	for i in xrange(1):
 		try:
 			#print 'Start your engines'
@@ -77,7 +77,7 @@ while len(a) < 21:
 			#print len(threads)
 			#print "j'ai append"
 			#print 'Threads type is :' + type(threads)
-			mysupertest.start()
+			#mysupertest.start()
 			#threads.start(mysupertest)
 			#print "j'ai start"
 		except:
@@ -86,10 +86,14 @@ while len(a) < 21:
 			pass
 	#print 'Je join'
 	threads = []
-	mysupertest.join
+	#mysupertest.join
 	#time.sleep(10)
-	sum1 = summary.summarize(all_objects)
-	summary.print_(sum1)
+	while True:
+		all_objects = muppy.get_objects()
+		sum1 = summary.summarize(all_objects)
+		summary.print_(sum1)
+		time.sleep(10)
+		os.system('clear')
 			# if i == 128:
 				# mysupertest.join
 				# print 'Do a barrel roll'
