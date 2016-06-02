@@ -132,9 +132,13 @@ class Scanthreader():
 			print 'HAN! A pas vide!'
 			strpeers = str(peers)
 			print strpeers
-			with open('peers.txt', 'a') as mypeers:
-				mypeers.write(strpeers)
-				
+			try:
+				with open('peers.txt', 'a') as mypeers:
+					mypeers.write(strpeers)
+			except IOError:
+				open('peers.txt, 'a').close()
+				with open('peers.txt', 'a') as mypeers:
+					mypeers.write(strpeers)
 			# elif len(a) < 21 and runs == 128:
 				# print 'Nothing found, trying again'
 				# mysupertest.join()

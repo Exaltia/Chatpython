@@ -58,10 +58,13 @@ class Gest():
 						#clientsock.close()
 			except:
 				print 'Protocole fracture!', sys.exc_info()
-
-with open("peers.txt", "r") as mypeers:
-	peers = mypeers.readlines()
-	print peers
+try:
+	with open("peers.txt", "r") as mypeers:
+		peers = mypeers.readlines()
+		print peers
+	except IOError:
+		open('peers.txt, 'a').close()
+		pass
 mygest = Gest() # Hum... errr... is this line still usefull? must test		
 ADDR = (Host, Port) #Server socket creation
 serversock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
