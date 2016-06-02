@@ -63,7 +63,7 @@ try:
 		peers = mypeers.readlines()
 		print peers
 except IOError:
-	open('peers.txt, 'a').close()
+	open('peers.txt', 'a').close()
 	pass
 mygest = Gest() # Hum... errr... is this line still usefull? must test		
 ADDR = (Host, Port) #Server socket creation
