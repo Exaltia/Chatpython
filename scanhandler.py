@@ -24,7 +24,7 @@ mytest = threadedscan.Testeur()
 myip = listpublicip[0] + '.' + listpublicip[1] + '.' + listpublicip[2] + '.'
 myip = str(myip)
 range1 = 1
-range2 = 2
+range2 = 254
 b = []
 firstgroup = []
 secondgroup = []
@@ -34,7 +34,7 @@ sleeptime = 0
 a = {}
 runs = 0
 firsttime = 0
-#i = 0
+i = 0
 for num in xrange (1, 127):
 	firstgroup.append(num)
 	#print 'mange ton for first group'
@@ -56,10 +56,19 @@ while len(a) < 21:
 	#print myip
 		#print i
 	#all_objects = muppy.get_objects()
-	for i in xrange(1):
-		try:
+	while i > 100: #Still not perfect, i falls way under 100
+	#while 100 <= i <= 127:
+		print 'je join'
+		mysupertest.join
+		i = threading.enumerate()
+		#print i
+		i = len(i)
+		time.sleep(0.05)
+		#print 'After join, i equal :' + str(i)
+	for i in xrange(128):
+		try: # This is the wild scanner, must add the "neighborhourjeoitjreiotrje" one (damn word!)
 			#print 'Start your engines'
-			if listpublicip[0] > 255:
+			if listpublicip[0] >= 255:
 				listpublicip[0] = random.choice(thirdgroup)
 			elif listpublicip[1] > 255:
 				listpublicip[1] = random.choice(thirdgroup)
@@ -74,10 +83,13 @@ while len(a) < 21:
 			#print i
 			#print 'Je vais append'
 			threads.append(mysupertest)
+			#print '-----------------------------------------------'
+			#print threads
+			#time.sleep(0.1)
 			#print len(threads)
 			#print "j'ai append"
 			#print 'Threads type is :' + type(threads)
-			#mysupertest.start()
+			mysupertest.start()
 			#threads.start(mysupertest)
 			#print "j'ai start"
 		except:
@@ -85,15 +97,20 @@ while len(a) < 21:
 			#print "J'ai merde"
 			pass
 	#print 'Je join'
-	threads = []
-	#mysupertest.join
+	#threads = []
+	#while True:
+		#print threads
+	#print '--------------------'
+	#abc = threading.enumerate()
+	#print len(abc)
+	#time.sleep()
 	#time.sleep(10)
-	while True:
-		all_objects = muppy.get_objects()
-		sum1 = summary.summarize(all_objects)
-		summary.print_(sum1)
-		time.sleep(10)
-		os.system('clear')
+	# while True:
+		# all_objects = muppy.get_objects()
+		# sum1 = summary.summarize(all_objects)
+		# summary.print_(sum1)
+		# time.sleep(10)
+		# os.system('clear')
 			# if i == 128:
 				# mysupertest.join
 				# print 'Do a barrel roll'
@@ -119,6 +136,6 @@ while len(a) < 21:
 		# runs = 0
 		#time.sleep(10)
 		#mysupertest.join()
-
+	#print nodetable
 print 'hop'
 print 'byebye'

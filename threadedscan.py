@@ -1,7 +1,7 @@
 #!/usr/bin/python
 #Scan, scan, scan, and more scan, I WANT FRIENDS!
 from Queue import Queue
-import time, socket, sys, time, random, os
+import time, socket, sys, time, random, os, datetime #Datetime is for debug purpose only on the already in progress error diag
 class Testeur():
 	def testtest(self, myip, range1, range2, out_q, firsttime,):
 		PORT = 4242
@@ -14,18 +14,19 @@ class Testeur():
 		# fourthgroup = []
 		bb = []
 		nodetable = {}
-		#s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-		for num in xrange (range1, range2):
+		for num in range(range1, range2):
 			host = myip + '.' + str(num)
-			s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-			s.settimeout(0.65)
+			#host = '212.83.136.107' # for debug, testing quickly my own node (who is at .137)
 			#ADDR = (host, self.PORT)
+			#print host
 			try:
-				#print 'je try'
-				#s.setblocking(0)
-				#print 'socket setted up'
+				s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+				s.settimeout(0.65)
+				
+				#s.setblocking(1)
+				
 				s.connect((host, PORT))
-				#print 'I connect'
+				
 				lenmsg = len(MESSAGE)
 				lenmsg = str(lenmsg)
 				print len(lenmsg)
@@ -46,16 +47,21 @@ class Testeur():
 				#print 'je vais close'
 				s.close()
 			except:
-				#print 'host' + host +  'except', sys.exc_info()
-				#print 'je vais close aussi'
-				time.sleep(0.05)
+				s.close
+				#print 'host' + host +  'except' + str(datetime.datetime.now()), sys.exc_info()
+				#print 'je vais close'
+				#s.close
 				#s.shutdown(socket.SHUT_RDWR)
 				#print len(nodetable)
 					#time.sleep(0.1)
 					#print bb
 				#print 'Pouet'
-			#print 'Going to out_q'
+			print 'Going to out_q'
 			out_q.put(nodetable)
+			#print host
+			# print 'i close' + host + str(datetime.datetime.now())
+			
+			# print host + 'Closed' + str(datetime.datetime.now())
 			# del host
 			# del lenmsg
 			# del MESSAGE
@@ -63,6 +69,8 @@ class Testeur():
 			# del bb
 			# del nodetable
 		#print 'fini'
-		#s.shutdown(socket.SHUT_RDWR)
+		#s.shutdown()
+		#sys.exit(0)
+		#return(nodetable)
 q = Queue()
 
