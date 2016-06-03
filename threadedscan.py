@@ -29,7 +29,7 @@ class Scanner():
 				
 				lenmsg = len(MESSAGE)
 				lenmsg = str(lenmsg)
-				print len(lenmsg)
+				print 'lenmsg is :' + len(lenmsg)
 				protomsg = lenmsg + ','+ '' + ',' + MESSAGE #client Wait for the following message : "messagelenght,message"
 				s.send(protomsg)
 				#print 'i send'

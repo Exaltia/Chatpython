@@ -4,12 +4,17 @@
 #I'm a big lazy script who only launch trhead, collect user input and send it to my thread, then get it back
 import socket, threading, os, sys, signal, sender, receiver, hashlib, scanhandler
 from Queue import Queue
-print dir(receiver)
 mygest = receiver.Gest()
 myhand = sender.Messagehandling()
 class kbdinput():
 	def keyboard_input(self, out_q):
+		peers = {}
 		print 'Please enter your e-mail.'
+		try:
+			with open("peers.txt", "r") as mypeers:
+				eval(peers) = mypeers.readlines()
+		except:
+			pass
 		emailinput = raw_input()
 		emailhash = hashlib.md5(emailinput).hexdigest()
 		print 'email hash is ' + emailhash
@@ -23,7 +28,12 @@ class kbdinput():
 				print 'Enter the destination (email)'
 				dstmail = raw_input() #This method DOES NOT handle copy past with empty lines
 				dsthash = hashlib.md5(dstmail).hexdigest()
-				myhand.sendmessage(kbdata, dst) #i use the function in sender.py to send data
+				dst = peers.get(dsthash)
+				if dst == None:
+					print 'User unknown'
+					break
+				else:
+					myhand.sendmessage(kbdata, dst) #i use the function in sender.py to send data
 			except:
 				print 'Error', sys.exc_info() #Nope sir... TODO:handle ctrl+c for quit or add a keyword for quitting
 				break

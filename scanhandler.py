@@ -33,10 +33,13 @@ class Scanthreader():
 		thirdgroup = []	
 		fourthgroup = []
 		sleeptime = 0
-		peers = {'340d85eab379e5dad0bde7a41672a4b6': '212.83.136.107'}
+		qq = {'340d85eab379e5dad0bde7a41672a4b6': '212.83.136.107'}
+		peers = {}
+		#peers = {'340d85eab379e5dad0bde7a41672a4b6': '212.83.136.107'}
 		runs = 0
 		firsttime = 0
 		i = 0
+		#qq = ()
 		for num in xrange (1, 127):
 			firstgroup.append(num)
 			#print 'mange ton for first group'
@@ -94,10 +97,24 @@ class Scanthreader():
 					threadhandler.start()
 					#threads.start(mysupertest)
 					#print "j'ai start"
+					if qq:
+						print 'HAN! A pas vide!'
+						print len(peers)
+						peers.update(qq)
+						print peers
+						qq = ()
+						try:
+							with open('peers.txt', 'w') as mypeers:
+								mypeers.write(str(peers))
+						except IOError:
+							open('peers.txt', 'a').close()
+							with open('peers.txt', 'w') as mypeers:
+								mypeers.write(str(peers))
 				except:
 					print 'oops', sys.exc_info()
 					#print "J'ai merde"
 					pass
+			
 			#print 'Je join'
 			#threads = []
 			#while True:
@@ -124,21 +141,10 @@ class Scanthreader():
 					# pass
 			#threads.append(mysupertest)
 			#print runs
-			peers = q.get()
+			qq = q.get()
 			#runs = runs + 1
 			# if runs == 2:
 				# print 'CRAC!'
-		if peers:
-			print 'HAN! A pas vide!'
-			strpeers = str(peers)
-			print strpeers
-			try:
-				with open('peers.txt', 'a') as mypeers:
-					mypeers.write(strpeers)
-			except IOError:
-				open('peers.txt, 'a').close()
-				with open('peers.txt', 'a') as mypeers:
-					mypeers.write(strpeers)
 			# elif len(a) < 21 and runs == 128:
 				# print 'Nothing found, trying again'
 				# mysupertest.join()
