@@ -13,7 +13,7 @@ class Scanner():
 		# thirdgroup = []
 		# fourthgroup = []
 		bb = []
-		nodetable = {'340d85eab379e5dad0bde7a41672a4b6': '212.83.136.107'}
+		nodetable = {'340d85eab379e5dad0bde7a41672a4b6': '212.83.136.107',}
 		for num in range(range1, range2):
 			host = myip + '.' + str(num)
 			#host = '212.83.136.107' # for debug, testing quickly my own node (who is at .137)
@@ -48,7 +48,9 @@ class Scanner():
 				s.close()
 			except:
 				s.close
-			pickle.dump( nodetable, open( "peers.txt", "wb" ) )
+				with open("peers.txt", "wb") as picklefile:
+					pickle.dump(nodetable, picklefile)
+			#pickle.dump( nodetable, open( "peers.txt", "wb" ) )
 				#print 'host' + host +  'except' + str(datetime.datetime.now()), sys.exc_info()
 				#print 'je vais close'
 				#s.close
