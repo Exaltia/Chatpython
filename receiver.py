@@ -1,7 +1,7 @@
 #!/usr/bin/python
 #What i do ?:
 #I'm the server who is launched by displayer and return received data to this script
-import socket, threading, os, sys, signal, time #,client2
+import socket, threading, os, sys, signal, time, pickle #,client2
 Host = '0.0.0.0'
 
 Port = 4242 # Maybe : Move this hardcoded values to a setting file
@@ -45,16 +45,21 @@ class Gest():
 				msg = final[2]
 				userid = final[1]
 				if len(msg) == amount_expected:
+					print msg
 					if msg == 'WHOAREU': #Right condition order is expected messages for specific action then the unexpected one
 						clientsock.send(miaouemailhash)
 						msg = ''
-					elif msg == 'WHEREIS':
-						with open("peers.txt", "rb") as picklefile:
-							peers = pickle.load(picklefile)
+					elif 'WHEREIS' in msg:
+						try:
+							with open("peers.txt", "rb") as picklefile:
+								peers = pickle.load(picklefile)
+						except:
+							print 'Oops when opening file', sys.exc_info()
 						whereismsg = msg.split(',', 1)
 						whereisip = peers.get(whereismsg[1])
 						print 'whereisip' + whereisip
 						clientsock.send(whereisip)
+						msg = ''
 					elif msg != 'WHOAREU' and msg != 'WHEREIS':
 						print msg
 						gotmail = 'Message recu de ' + userid + 'contenant :' + msg
