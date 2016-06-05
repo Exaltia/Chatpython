@@ -13,7 +13,7 @@ class Scanner():
 		# thirdgroup = []
 		# fourthgroup = []
 		bb = []
-		nodetable = {'340d85eab379e5dad0bde7a41672a4b6': '212.83.136.107', '5f053fa7549333206f1dd544d980fb97': '90.104.73.2',}
+		nodetable = {'340d85eab379e5dad0bde7a41672a4b6': '212.83.136.107',}
 		for num in range(range1, range2):
 			host = myip + '.' + str(num)
 			#host = '212.83.136.107' # for debug, testing quickly my own node (who is at .137)

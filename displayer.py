@@ -79,7 +79,7 @@ class kbdinput():
 							with open("peers.txt", "rb") as picklefile:
 								localvar.peers = pickle.load(picklefile) #Step two, reload the peers "DB" and try again, the scanner may had find the wanted node by himself
 							localvar.dsthash = hashlib.md5(localvar.dstmail).hexdigest()
-							localvar.dst = localvar.peers.get(dsthash)
+							localvar.dst = localvar.peers.get(localvar.dsthash)
 						except:
 							print 'Still file not found ?!', sys.exc_info()
 							pass

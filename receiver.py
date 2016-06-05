@@ -58,7 +58,7 @@ class Gest():
 						whereismsg = msg.split(',', 1)
 						whereisip = peers.get(whereismsg[1])
 						print 'whereisip' + whereisip
-						clientsock.send(whereisip)
+						clientsock.send('ISAT,', whereisip)
 						msg = ''
 					elif msg != 'WHOAREU' and msg != 'WHEREIS':
 						print msg

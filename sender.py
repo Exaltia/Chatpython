@@ -25,6 +25,16 @@ class Messagehandling():
 		s.send(protomsg) # send message to the specified client
 		print 'sent'
 		data = s.recv(BUFF) #Cause the sent message to be immediatly displayed on the sender screen, will be used to construct the chatlog, finally maybe using that to check that the sender got the message would be better
+		if 'ISAT' in data:
+			try:
+				msg = data.split(',', 1)
+				with open("peers.txt", "rb") as picklefile:
+					peers = pickle.load(picklefile)
+					peers.update(msg[0], msg[1])
+					print str(peers)
+					pickle.dump(nodetable, picklefile)
+			except:
+				print 'oops', sys.exc_info()
 		s.close()
 		print "received data:", data #Debug line, could be removed Soon(tm)
 	def askfornode(self, dsthash , TCP_IP, ASKMESSAGE): # Used when the node is unknown
@@ -38,6 +48,6 @@ class Messagehandling():
 		print 'dsthash' + dsthash
 		print 'lenmsg' + lenmsg
 		print 'ASKMESSAGE' + ASKMESSAGE
+		print protomsg
 		s.send(protomsg)
 		s.close()
-		
