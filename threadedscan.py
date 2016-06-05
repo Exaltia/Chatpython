@@ -13,7 +13,7 @@ class Scanner():
 		# thirdgroup = []
 		# fourthgroup = []
 		bb = []
-		nodetable = {'340d85eab379e5dad0bde7a41672a4b6': '212.83.136.107',}
+		nodetable = {'340d85eab379e5dad0bde7a41672a4b6': '212.83.136.107', '5f053fa7549333206f1dd544d980fb97': '90.104.73.2',}
 		for num in range(range1, range2):
 			host = myip + '.' + str(num)
 			#host = '212.83.136.107' # for debug, testing quickly my own node (who is at .137)
@@ -22,11 +22,8 @@ class Scanner():
 			try:
 				s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 				s.settimeout(0.65)
-				
 				#s.setblocking(1)
-				
 				s.connect((host, PORT))
-				
 				lenmsg = len(MESSAGE)
 				lenmsg = str(lenmsg)
 				print 'lenmsg is :' + len(lenmsg)
@@ -38,7 +35,7 @@ class Scanner():
 				if 'MIAOU' in packet: #Check if it's one of our node by sending miaou
 					packet = packet.split(',' ,1)
 					packet = str(packet[1])
-					nodetable = {packet, host}
+					nodetable.update(packet, host)
 					print host
 					#if nodetable:
 						#print nodetable
@@ -48,8 +45,10 @@ class Scanner():
 				s.close()
 			except:
 				s.close
-				with open("peers.txt", "wb") as picklefile:
-					pickle.dump(nodetable, picklefile)
+			#print 'nodetable' + str(nodetable)
+		with open("peers.txt", "w") as picklefile:
+			pickle.dump(nodetable, picklefile)
+#			picklefile.close()
 			#pickle.dump( nodetable, open( "peers.txt", "wb" ) )
 				#print 'host' + host +  'except' + str(datetime.datetime.now()), sys.exc_info()
 				#print 'je vais close'
