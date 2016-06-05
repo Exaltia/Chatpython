@@ -45,26 +45,25 @@ class Gest():
 				msg = final[2]
 				userid = final[1]
 				if len(msg) == amount_expected:
-					if msg != 'WHOAREU':
+					if msg == 'WHOAREU': #Right condition order is expected messages for specific action then the unexpected one
+						clientsock.send(miaouemailhash)
+						msg = ''
+					elif msg == 'WHEREIS':
+						with open("peers.txt", "rb") as picklefile:
+							peers = pickle.load(picklefile)
+						whereismsg = msg.split(',', 1)
+						whereisip = peers.get(whereismsg[1])
+						print 'whereisip' + whereisip
+						clientsock.send(whereisip)
+					elif msg != 'WHOAREU' and msg != 'WHEREIS':
 						print msg
 						gotmail = 'Message recu de ' + userid + 'contenant :' + msg
 						print gotmail
 						clientsock.send(gotmail)
 						final2 = 'Ok!'
 						msg = ''
-					elif msg == 'WHOAREU':
-						clientsock.send(miaouemailhash)
-						msg = ''
-						#clientsock.close()
 			except:
 				print 'Protocole fracture!', sys.exc_info()
-try:
-	with open("peers.txt", "r") as mypeers:
-		peers = mypeers.readlines()
-		print peers
-except IOError:
-	open('peers.txt', 'a').close()
-	pass
 mygest = Gest() # Hum... errr... is this line still usefull? must test		
 ADDR = (Host, Port) #Server socket creation
 serversock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)

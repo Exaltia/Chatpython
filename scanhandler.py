@@ -1,6 +1,7 @@
 #!/usr/bin/python
 #This file is (soon!) to be launched by displayer and handle the scan threads
-import threadedscan, threading, sys, time, random, os
+import threading, sys, time, random, os
+from threadedscan import Scanner
 from requests import get
 from Queue import Queue
 # from pympler import muppy, summary #Memory leak tracker, remove once debugued
@@ -22,7 +23,7 @@ class Scanthreader():
 		listpublicip = publicip.split('.')
 		print 'My public ip is : ' + publicip
 		#print dir(threadedscan)
-		mythreadedscan = threadedscan.Scanner()
+		mythreadedscan = Scanner()
 		myip = listpublicip[0] + '.' + listpublicip[1] + '.' + listpublicip[2] + '.'
 		myip = str(myip)
 		range1 = 1
@@ -33,7 +34,7 @@ class Scanthreader():
 		thirdgroup = []	
 		fourthgroup = []
 		sleeptime = 0
-		qq = {'340d85eab379e5dad0bde7a41672a4b6': '212.83.136.107'}
+		qq = {}
 		peers = {}
 		#peers = {'340d85eab379e5dad0bde7a41672a4b6': '212.83.136.107'}
 		runs = 0
@@ -51,16 +52,6 @@ class Scanthreader():
 			#print 'mange ton for third group'
 		#print type(listpublicip[2])
 		while len(peers) < 5:
-			#print 'len true'
-			#while int(listpublicip[2]) < 255:
-			#while runs < 128:
-				#print 'while TRUE!'
-				#print 'runs is :' + str(runs)
-			#print myip
-			#sleeptime = sleeptime + 0.1 * 2
-			#print myip
-				#print i
-			#all_objects = muppy.get_objects()
 			while i > 100: #Still not perfect, i falls way under 100
 			#while 100 <= i <= 127:
 				#print 'je join'
@@ -83,75 +74,10 @@ class Scanthreader():
 					myip = str(myip)
 					#print myip
 					threadhandler = threading.Thread(target=mythreadedscan.threadedscan, args=(myip, range1, range2, q, firsttime))
-					#mysupertest.daemon = True
 					listpublicip[2] = int(listpublicip[2]) + 1
-					#print i
-					#print 'Je vais append'
 					threads.append(mythreadedscan)
-					#print '-----------------------------------------------'
-					#print threads
-					#time.sleep(0.1)
-					#print len(threads)
-					#print "j'ai append"
-					#print 'Threads type is :' + type(threads)
 					threadhandler.start()
-					#threads.start(mysupertest)
-					#print "j'ai start"
-					if qq:
-						print 'HAN! A pas vide!'
-						print len(peers)
-						peers.update(qq)
-						print peers
-						qq = ()
-						try:
-							with open('peers.txt', 'w') as mypeers:
-								mypeers.write(str(peers))
-						except IOError:
-							open('peers.txt', 'a').close()
-							with open('peers.txt', 'w') as mypeers:
-								mypeers.write(str(peers))
 				except:
 					print 'oops', sys.exc_info()
-					#print "J'ai merde"
-					pass
-			
-			#print 'Je join'
-			#threads = []
-			#while True:
-				#print threads
-			#print '--------------------'
-			#abc = threading.enumerate()
-			#print len(abc)
-			#time.sleep()
-			#time.sleep(10)
-			# while True:
-				# all_objects = muppy.get_objects()
-				# sum1 = summary.summarize(all_objects)
-				# summary.print_(sum1)
-				# time.sleep(10)
-				# os.system('clear')
-					# if i == 128:
-						# mysupertest.join
-						# print 'Do a barrel roll'
-						# time.sleep(3)
-						#break
-				# except thread.error:
-					# print 'Error', sys.exc_info()
-					# time.sleep(30)
-					# pass
-			#threads.append(mysupertest)
-			#print runs
-			qq = q.get()
-			#runs = runs + 1
-			# if runs == 2:
-				# print 'CRAC!'
-			# elif len(a) < 21 and runs == 128:
-				# print 'Nothing found, trying again'
-				# mysupertest.join()
-				# listpublicip[2] = 0
-				# runs = 0
-				#time.sleep(10)
-				#mysupertest.join()
-			#print nodetable
-		print 'hop'
-		print 'byebye'
+					print "J'ai merde"
+					#pass
